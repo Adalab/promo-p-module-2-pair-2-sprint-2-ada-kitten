@@ -132,10 +132,10 @@ buttonCancelForm.addEventListener("click", cancelNewKitten);
 // };
 
 const newKittenDataObject = {
-    image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
-    name: "Anastacio",
-    desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
-    race: "British Shorthair",
-  };
+  image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
+  name: "Anastacio",
+  desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
+  race: "British Shorthair",
+};
 
 console.log(newKittenDataObject);
