@@ -81,19 +81,19 @@ function handleClickNewCatForm(event) {
   }
 }
 //Adicionar nuevo gatito
-function addNewKitten(event) {
-  event.preventDefault();
-  const valueDesc = inputDesc.value;
-  const valuePhoto = inputPhoto.value;
-  const valueName = inputName.value;
-  if (valueDesc === "" && valuePhoto === "" && valueName === "") {
-    labelMesageError.innerHTML = "Debe rellenar todos los valores";
-  } else {
-    if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-      labelMesageError.innerHTML = "";
-    }
-  }
-}
+// function addNewKitten(event) {
+//   event.preventDefault();
+//   const valueDesc = inputDesc.value;
+//   const valuePhoto = inputPhoto.value;
+//   const valueName = inputName.value;
+//   if (valueDesc === "" && valuePhoto === "" && valueName === "") {
+//     labelMesageError.innerHTML = "Debe rellenar todos los valores";
+//   } else {
+//     if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
+//       labelMesageError.innerHTML = "";
+//     }
+//   }
+// }
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
   event.preventDefault();
@@ -124,18 +124,29 @@ searchButton.addEventListener("click", filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
 
+const newKittenDataObject = {
+  image: inputPhoto.value,
+  name: inputName.value,
+  desc: inputDesc.value,
+  race: inputRace.value,
+};
+
+
 // const newKittenDataObject = {
-//   image: inputPhoto.value,
-//   name: inputName.value,
-//   desc: inputDesc.value,
-//   race: inputRace.value,
+//   image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
+//   name: "Anastacio",
+//   desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
+//   race: "British Shorthair",
 // };
 
-const newKittenDataObject = {
-  image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
-  name: "Anastacio",
-  desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
-  race: "British Shorthair",
-};
+function addNewKitten(event) {
+    event.preventDefault();
+    kittenDataList.push(newKittenDataObject);
+    console.log('hola')
+}
+
+
+
+buttonAdd.addEventListener("click", addNewKitten);
 
 console.log(newKittenDataObject);
