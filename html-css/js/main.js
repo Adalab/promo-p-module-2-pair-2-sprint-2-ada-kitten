@@ -13,6 +13,7 @@ const inputRace = document.querySelector(".js-input-race");
 const linkNewFormElememt = document.querySelector(".js-button-new-form");
 const labelMesageError = document.querySelector(".js-label-error");
 const input_search_desc = document.querySelector(".js_in_search_desc");
+const input_search_race = document.querySelector(".js_in_search_race");
 
 //Objetos con cada gatito
 const kittenData_1 = {
@@ -106,13 +107,23 @@ function cancelNewKitten(event) {
 //Filtrar por descripción
 function filterKitten(event) {
   event.preventDefault();
-  const descrSearchText = input_search_desc.value;
+  const descrSearchText = input_search_desc.value.toLowerCase();
+  const descrSearchTextRace = input_search_race.value.toLowerCase();
   listElement.innerHTML = "";
-  for (const kittenItem of kittenDataList) {
-    if (kittenItem.desc.includes(descrSearchText)) {
-      listElement.innerHTML += renderKitten(kittenItem);
-    }
-  }
+  const kittenItem = kittenDataList
+    .filter((kittenItem) =>
+      kittenItem.desc.toLowerCase().includes(descrSearchText),
+    )
+    .filter((kittenItem) =>
+      kittenItem.race.toLowerCase().includes(descrSearchTextRace),
+    );
+
+  // for (const kittenItem of kittenDataList) {
+  //   if (kittenItem.desc.includes(descrSearchText)) {
+  //     listElement.innerHTML += renderKitten(kittenItem);
+  //   }
+  // }
+  renderKittenList(kittenItem);
 }
 
 //Mostrar el litado de gatitos en ell HTML
@@ -124,20 +135,17 @@ searchButton.addEventListener("click", filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
 
-
-
 function addNewKitten(event) {
-  event.preventDefault()
+  event.preventDefault();
   const newKittenDataObject = {
-    image:inputPhoto.value,
+    image: inputPhoto.value,
     name: inputName.value,
     desc: inputDesc.value,
     race: inputRace.value,
   };
 
   kittenDataList.push(newKittenDataObject);
-  // console.log(kittenDataList);
-  labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+  labelMesageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
   renderKittenList(kittenDataList);
 }
 
