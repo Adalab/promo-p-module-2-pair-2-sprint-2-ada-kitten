@@ -124,29 +124,21 @@ searchButton.addEventListener("click", filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
 
-const newKittenDataObject = {
-  image: inputPhoto.value,
-  name: inputName.value,
-  desc: inputDesc.value,
-  race: inputRace.value,
-};
 
-
-// const newKittenDataObject = {
-//   image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
-//   name: "Anastacio",
-//   desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
-//   race: "British Shorthair",
-// };
 
 function addNewKitten(event) {
-    event.preventDefault();
-    kittenDataList.push(newKittenDataObject);
-    console.log('hola')
+  event.preventDefault()
+  const newKittenDataObject = {
+    image:inputPhoto.value,
+    name: inputName.value,
+    desc: inputDesc.value,
+    race: inputRace.value,
+  };
+
+  kittenDataList.push(newKittenDataObject);
+  // console.log(kittenDataList);
+  labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+  renderKittenList(kittenDataList);
 }
 
-
-
 buttonAdd.addEventListener("click", addNewKitten);
-
-console.log(newKittenDataObject);
