@@ -37,7 +37,7 @@ const kittenData_3 = {
   race: "British Shorthair",
 };
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+let kittenDataList = [];
 
 //Funciones
 function renderKitten(kittenData) {
@@ -45,7 +45,7 @@ function renderKitten(kittenData) {
     <article>
       <img
         class="card_img"
-        src=${kittenData.image}
+        src=${kittenData.url}
         alt="gatito"
       />
       <h3 class="card_title">${kittenData.name}</h3>
@@ -150,3 +150,22 @@ function addNewKitten(event) {
 }
 
 buttonAdd.addEventListener("click", addNewKitten);
+
+function getKitten() {
+  const GITHUB_USER = "lorenaggs";
+  const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
+  `;`;
+
+  fetch(SERVER_URL, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  }).then((response) => response.json())
+    .then((data) => {
+ 
+      kittenDataList = data.results;
+      renderKittenList(kittenDataList);
+      console.log(kittenDataList);
+      return kittenDataList;
+  })
+}
+getKitten();
