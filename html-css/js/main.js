@@ -81,7 +81,7 @@ function handleClickNewCatForm(event) {
     hideNewCatForm();
   }
 }
-//Adicionar nuevo gatito
+// Adicionar nuevo gatito
 // function addNewKitten(event) {
 //   event.preventDefault();
 //   const valueDesc = inputDesc.value;
@@ -135,37 +135,100 @@ searchButton.addEventListener("click", filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
 
-function addNewKitten(event) {
-  event.preventDefault();
-  const newKittenDataObject = {
-    image: inputPhoto.value,
-    name: inputName.value,
-    desc: inputDesc.value,
-    race: inputRace.value,
-  };
+// function addNewKitten(event) {
+//   event.preventDefault();
+//   const newKittenDataObject = {
+//     image: inputPhoto.value,
+//     name: inputName.value,
+//     desc: inputDesc.value,
+//     race: inputRace.value,
+//   };
 
-  kittenDataList.push(newKittenDataObject);
-  labelMesageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
-  renderKittenList(kittenDataList);
-}
+//   kittenDataList.push(newKittenDataObject);
+//   labelMesageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+//   renderKittenList(kittenDataList);
+// }
 
 buttonAdd.addEventListener("click", addNewKitten);
 
-function getKitten() {
+// function getKitten() {
+//   const GITHUB_USER = "lorenaggs";
+//   const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
+//   `;`;
+
+//   fetch(SERVER_URL, {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json" },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       kittenDataList = data.results;
+//       renderKittenList(kittenDataList);
+//       console.log(kittenDataList);
+//       return kittenDataList;
+//     });
+// }
+// getKitten();
+const kittenListStored = JSON.parse(localStorage.getItem("kittensList"));
+
+if (kittenListStored === kittenDataList) {
+  renderKitten(kittenListStored);
+} else {
+  //sino existe el listado de gatitos en el local storage
+  //haz la petición al servidor
   const GITHUB_USER = "lorenaggs";
   const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
-  `;`;
-
-  fetch(SERVER_URL, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  }).then((response) => response.json())
+  fetch(SERVER_URL)
+    .then((response) => response.json())
     .then((data) => {
- 
+      //guarda el listado obtenido en el local storage.
+      //vuelve a pintar el listado de gatitos
+      //completa el código...
       kittenDataList = data.results;
       renderKittenList(kittenDataList);
       console.log(kittenDataList);
-      return kittenDataList;
-  })
+      const cache = localStorage.setItem(
+        "kittenDataList",
+        JSON.stringify(kittenDataList),
+      );
+      return cache;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
-getKitten();
+
+function addNewKitten(event) {
+  event.preventDefault();
+
+  //obtener la información de los gatitos del formulario
+  const newURL = inputPhoto.value;
+  const newDescription = inputDesc.value;
+  const newName = inputName.value;
+  const newRace = inputRace.value;
+  //nuevo objeto con la info del gatito
+  const newKittenDataObject = {
+    url: newURL,
+    name: newName,
+    desc: newDescription,
+    race: newRace,
+  };
+
+  const GITHUB__USER = "gloriarodrife";
+  fetch(`//adalab-bookmarks-api.herokuapp.com/api/bookmarks/${GITHUB__USER}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newKittenDataObject),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.success) {
+      } else {
+        console.error(error);
+      }
+    });
+
+  labelMesageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+  renderKittenList(kittenDataList);
+}
