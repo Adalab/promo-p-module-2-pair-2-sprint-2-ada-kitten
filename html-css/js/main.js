@@ -41,20 +41,50 @@ let kittenDataList = [];
 
 //Funciones
 function renderKitten(kittenData) {
-  const kitten = `<li class="card">
-    <article>
-      <img
-        class="card_img"
-        src=${kittenData.url}
-        alt="gatito"
-      />
-      <h3 class="card_title">${kittenData.name}</h3>
-      <h3 class="card_race">${kittenData.race}</h3>
-      <p class="card_description">
-      ${kittenData.desc}
-      </p>
-    </article>
-    </li>`;
+  // const kitten = `<li class="card">
+  //   <article>
+  //     <img
+  //       class="card_img"
+  //       src=${kittenData.url}
+  //       alt="gatito"
+  //     />
+  //     <h3 class="card_title">${kittenData.name}</h3>
+  //     <h3 class="card_race">${kittenData.race}</h3>
+  //     <p class="card_description">
+  //     ${kittenData.desc}
+  //     </p>
+  //   </article>
+  //   </li>`;
+
+  const liElement = document.createElement("li");
+  liElement.classList.add("card");
+  const article = document.createElement("article");
+  const img = document.createElement("img");
+  img.setAttribute("class", "card_img");
+  img.setAttribute("src", kittenData.url);
+  img.setAttribute("alt", "gatito");
+  article.appendChild(img);
+
+  const cardTitle = document.createElement("h3");
+  cardTitle.classList.add("card_title");
+  const titleText = document.createTextNode(kittenData.name);
+  cardTitle.appendChild(titleText);
+
+  const cardRace = document.createElement("h3");
+  cardRace.classList.add("card_race");
+  const raceText = document.createTextNode(kittenData.race);
+  cardRace.appendChild(raceText);
+
+  const cardDescription = document.createElement("p");
+  cardDescription.classList.add("card_description");
+  const descriptionText = document.createTextNode(kittenData.desc);
+  cardDescription.appendChild(descriptionText);
+
+  article.appendChild(cardTitle);
+  article.appendChild(cardRace);
+  article.appendChild(cardDescription);
+  liElement.appendChild(article);
+  const kitten = liElement;
   return kitten;
 }
 
@@ -171,12 +201,12 @@ buttonAdd.addEventListener("click", addNewKitten);
 // getKitten();
 const kittenListStored = JSON.parse(localStorage.getItem("kittensList"));
 
-if (kittenListStored === kittenDataList) {
+if (kittenListStored === "") {
   renderKitten(kittenListStored);
 } else {
   //sino existe el listado de gatitos en el local storage
   //haz la petición al servidor
-  const GITHUB_USER = "lorenaggs";
+  const GITHUB_USER = "gloria";
   const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
   fetch(SERVER_URL)
     .then((response) => response.json())
@@ -186,7 +216,7 @@ if (kittenListStored === kittenDataList) {
       //completa el código...
       kittenDataList = data.results;
       renderKittenList(kittenDataList);
-      console.log(kittenDataList);
+      // console.log(kittenDataList);
       const cache = localStorage.setItem(
         "kittenDataList",
         JSON.stringify(kittenDataList),
@@ -214,19 +244,25 @@ function addNewKitten(event) {
     race: newRace,
   };
 
-  const GITHUB__USER = "gloriarodrife";
-  fetch(`//adalab-bookmarks-api.herokuapp.com/api/bookmarks/${GITHUB__USER}`, {
+  const GITHUB_USER = "lorenaggs";
+  fetch(`https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newKittenDataObject),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      if (data.success) {
+      if (data.success === true) {
+        //Completa y/o modifica el código:
+        //Agrega el nuevo gatito al listado push a la lista
+        // kittenDataList.push(newKittenDataObject);
+        //Guarda el listado actualizado en el local stoarge
+        //Visualiza nuevamente el listado de gatitos llamar a la funcion que pint alos gatitos
+        //Limpia los valores de cada input
       } else {
-        console.error(error);
+        //muestra un mensaje de error.
       }
+      console.log(data);
     });
 
   labelMesageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
